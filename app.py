@@ -30,7 +30,8 @@ def history():
 			i=i+1
 			if(i==5):
 				i=0
-			tamano=tamano+1
+				tamano=tamano+1
+	print "Tamano = ", tamano
 
 	return render_template('history.html',estado=estado,fecha=fecha,hora=hora,tanqueArriba=tanqueArriba,tanqueAbajo=tanqueAbajo,tamano=tamano)
 
