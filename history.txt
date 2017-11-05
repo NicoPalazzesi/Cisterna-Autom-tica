@@ -3,7 +3,7 @@ completado
 17:55
 58.40
 73.70
-completado
+fallo
 29/10/2017
 17:55
 10.80

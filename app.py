@@ -1,9 +1,32 @@
 from flask import Flask, render_template		#Se importan los modulos necesarios de Flask para poder levantar la web
 
 app = Flask(__name__)
+<<<<<<< HEAD
 @app.route('/')
 def index():
 	return render_template('index.html')	#Se renderiza la página principal de la web
+=======
+
+porcentajeTanqueArriba=0
+porcentajeTanqueAbajo=0
+	
+# def setPorcentajeTanqueArriba( valor ):
+# 	print  porcentajeTanqueArriba
+# 	global porcentajeTanqueArriba
+# 	porcentajeTanqueArriba = valor
+# 	print  porcentajeTanqueArriba
+# 	return;
+
+# def setPorcentajeTanqueAbajo( valor ):
+# 	global porcentajeTanqueAbajo
+# 	porcentajeTanqueAbajo = valor
+# 	return;
+
+@app.route('/')
+def index():
+	print  porcentajeTanqueArriba
+	return render_template('index.html', tanqueArriba=porcentajeTanqueArriba, tanqueAbajo=porcentajeTanqueAbajo)
+>>>>>>> table-history
 
 @app.route('/history')
 def history():
@@ -30,7 +53,12 @@ def history():
 			if(i==5):
 				i=0
 				tamano=tamano+1
+<<<<<<< HEAD
 	return render_template('history.html',estado=estado,fecha=fecha,hora=hora,tanqueArriba=tanqueArriba,tanqueAbajo=tanqueAbajo,tamano=tamano) #Se renderiza la página del historial de la web
+=======
+
+	return render_template('history.html',estado=estado,fecha=fecha,hora=hora,tanqueArriba=tanqueArriba,tanqueAbajo=tanqueAbajo,tamano=tamano)
+>>>>>>> table-history
 
 @app.route('/pruebas')
 def pruebas():
