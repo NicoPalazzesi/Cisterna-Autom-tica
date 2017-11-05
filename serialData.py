@@ -1,5 +1,6 @@
 import serial
 import time
+import app as a
 
 tanqueLeido='arriba';	#Se define una variable para controla de cual tanque se leyo el ultimo dato
 
@@ -7,6 +8,7 @@ with serial.Serial('COM5',9600) as port, open('history.txt','ab') as output:	#Se
 	while(1):	
 		x = port.read(size=10)		#Se lee un dato. Size = 10 indica la cantidad máxima de bytes a leer.
 		if(x == "completado") or (x == "fallo"):	#Si el dato leido es completado o fallo, se debe almacenar en el archivo
+			a.porcentajeTanqueArriba=50;
 			#Guardo el estado Final
 			x=x+"\r\n"								#Se agrega un salto de linea al final del dato
 			output.write(x)							#Se escribe el dato en el archivo

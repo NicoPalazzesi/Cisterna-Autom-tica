@@ -1,0 +1,19 @@
+.button {
+    background-color: #38B1CC; /* Blue */
+    border:none;
+    border-radius: 12px;
+    color: white;
+    padding: 10px 24px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+}
+
+.button:hover {
+    background-color: #FFFFFF; /* White */
+    color: #38B1CC;
+    border: 2px solid #38B1CC; /* Blue */
+}

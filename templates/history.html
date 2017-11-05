@@ -6,15 +6,16 @@
 	  	<title>Historial</title>
 	  	<meta charset="utf-8">
 	  	<meta name="viewport" content="width=device-width, initial-scale=1">
-	  	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+		<link rel="stylesheet" href="{{ url_for('static', filename='bootstrap.min.css')}}" type="text/css">
+		<link rel="stylesheet" href="{{ url_for('static', filename='w3.css')}}" type="text/css">
+		<link rel="stylesheet" href="{{ url_for('static', filename='button_style.css')}}" type="text/css">
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	</head>	
 	<body>
 
 		<div class="w3-container w3-blue", align="center">
-  			<h1>Cisterna Automatica</h1> 
+  			<h1>Cisterna Automatica</h1>
   			<p>Taller de Proyectos II</p> 
 		</div>
 
@@ -41,7 +42,11 @@
 						    <td><p class="text-center">{{hora[i]}}</p></td>
 					        <td><p class="text-center">{{tanqueArriba[i]}}</p></td>
 						    <td><p class="text-center">{{tanqueAbajo[i]}}</p></td>
-				        	<td><p class="text-center", style="color:MediumSeaGreen";>{{estado[i]}}</p></td>
+						    {%  if estado[i] == "completado": %}
+				        		<td><p class="text-center", style="color:MediumSeaGreen";>{{estado[i]}}</p></td>
+				        	{% else %}
+				        		<td><p class="text-center", style="color:Red";>{{estado[i]}}</p></td>
+				        	{% endif %}
 				    	</tr>
 			    	{% endfor %}
 			    </tbody>
@@ -49,10 +54,8 @@
 
 			<div class="widget-header">
     			<h3><p class="text-left">Estados</p></h3>
-    			<h5 style="color:MediumSeaGreen">Finalizado</h5>
-    			<h5 style="color:DodgerBlue">Cargando</h5>
-    			<h5 style="color:Red">Error 1</h5>
-    			<h5 style="color:Red">Error 2</h5>
+    			<h5 style="color:MediumSeaGreen">completado</h5>
+    			<h5 style="color:Red">fallo</h5>
  			</div>
 		</div>
 	</body>

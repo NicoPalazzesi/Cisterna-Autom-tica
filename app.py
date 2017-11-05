@@ -1,9 +1,30 @@
 from flask import Flask, render_template		#Se importan los modulos necesarios de Flask para poder levantar la web
 
 app = Flask(__name__)
+
 @app.route('/')
 def index():
 	return render_template('index.html')	#Se renderiza la página principal de la web
+
+porcentajeTanqueArriba=0
+porcentajeTanqueAbajo=0
+	
+# def setPorcentajeTanqueArriba( valor ):
+# 	print  porcentajeTanqueArriba
+# 	global porcentajeTanqueArriba
+# 	porcentajeTanqueArriba = valor
+# 	print  porcentajeTanqueArriba
+# 	return;
+
+# def setPorcentajeTanqueAbajo( valor ):
+# 	global porcentajeTanqueAbajo
+# 	porcentajeTanqueAbajo = valor
+# 	return;
+
+@app.route('/')
+def index():
+	print  porcentajeTanqueArriba
+	return render_template('index.html', tanqueArriba=porcentajeTanqueArriba, tanqueAbajo=porcentajeTanqueAbajo)
 
 @app.route('/history')
 def history():
