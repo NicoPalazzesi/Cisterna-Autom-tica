@@ -4,39 +4,34 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-	return render_template('index.html')	#Se renderiza la página principal de la web
-
-porcentajeTanqueArriba=0
-porcentajeTanqueAbajo=0
+	porcentajeTanqueArriba=0
+	porcentajeTanqueAbajo=0
 	
-# def setPorcentajeTanqueArriba( valor ):
-# 	print  porcentajeTanqueArriba
-# 	global porcentajeTanqueArriba
-# 	porcentajeTanqueArriba = valor
-# 	print  porcentajeTanqueArriba
-# 	return;
+	# def setPorcentajeTanqueArriba( valor ):
+	# 	print  porcentajeTanqueArriba
+	# 	global porcentajeTanqueArriba
+	# 	porcentajeTanqueArriba = valor
+	# 	print  porcentajeTanqueArriba
+	# 	return;
 
-# def setPorcentajeTanqueAbajo( valor ):
-# 	global porcentajeTanqueAbajo
-# 	porcentajeTanqueAbajo = valor
-# 	return;
+	# def setPorcentajeTanqueAbajo( valor ):
+	# 	global porcentajeTanqueAbajo
+	# 	porcentajeTanqueAbajo = valor
+	# 	return;
 
-@app.route('/')
-def index():
-	print  porcentajeTanqueArriba
 	return render_template('index.html', tanqueArriba=porcentajeTanqueArriba, tanqueAbajo=porcentajeTanqueAbajo)
 
 @app.route('/history')
 def history():
-	i=0				#Se define una variable para controlar que dato se leyó
-	tamano=0		#En la variable tamaño se cuentan cuantas filas completas de datos se leyeron
-	estado=[]		# Se definen cinco arreglos en los que se almacenan todos los datos leídos
+	i=0				#Se define una variable para controlar que dato se leyo
+	tamano=0		#En la variable tamano se cuentan cuantas filas completas de datos se leyeron
+	estado=[]		# Se definen cinco arreglos en los que se almacenan todos los datos leidos
 	fecha=[]		
 	hora=[]
 	tanqueArriba=[]
 	tanqueAbajo=[]
 	with open('history.txt', 'r') as file:		#Se abre el archivo en modo lectura
-		for line in file:						#Se lee una linea y para cada una se añade al final
+		for line in file:						#Se lee una linea y para cada una se anade al final
 			if(i==0):							#del arreglo correspondiente 
 				estado.append(line[:-1])
 			elif(i==1):
@@ -51,7 +46,7 @@ def history():
 			if(i==5):
 				i=0
 				tamano=tamano+1
-	return render_template('history.html',estado=estado,fecha=fecha,hora=hora,tanqueArriba=tanqueArriba,tanqueAbajo=tanqueAbajo,tamano=tamano) #Se renderiza la página del historial de la web
+	return render_template('history.html',estado=estado,fecha=fecha,hora=hora,tanqueArriba=tanqueArriba,tanqueAbajo=tanqueAbajo,tamano=tamano) #Se renderiza la pagina del historial de la web
 
 @app.route('/pruebas')
 def pruebas():
