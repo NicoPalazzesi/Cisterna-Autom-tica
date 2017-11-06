@@ -40,7 +40,11 @@
   					</div>
 				</div>
 				<div class="w3-third", align="center">
-					<h4>Cisterna en Reposo</h4>
+					{% if estado == "reposo": %}
+						<h4>Cisterna en Reposo</h4>
+					{% else: %}
+						<h4>Cisterna en funcionamiento</h4>
+					{% endif %}
 					<p></p>
 					<p></p>
 				</div>

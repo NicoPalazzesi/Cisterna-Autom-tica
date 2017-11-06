@@ -6,7 +6,7 @@ app = Flask(__name__)
 def index():
 	porcentajeTanqueArriba=0
 	porcentajeTanqueAbajo=0
-	
+	estado="reposo"
 	# def setPorcentajeTanqueArriba( valor ):
 	# 	print  porcentajeTanqueArriba
 	# 	global porcentajeTanqueArriba
@@ -19,7 +19,7 @@ def index():
 	# 	porcentajeTanqueAbajo = valor
 	# 	return;
 
-	return render_template('index.html', tanqueArriba=porcentajeTanqueArriba, tanqueAbajo=porcentajeTanqueAbajo)
+	return render_template('index.html', tanqueArriba=porcentajeTanqueArriba, tanqueAbajo=porcentajeTanqueAbajo, estado=estado)
 
 @app.route('/history')
 def history():
