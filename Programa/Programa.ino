@@ -1,15 +1,15 @@
 //Estados del Arduino
 const int reposo = 0;
 const int cargando = 1;
-int estadoArduino=reposo;
+int estadoArduino;
 
 //Estados de los Sensores de Agua
 const int sensor_de_agua_arriba = 2;
 const int sensor_de_agua_abajo = 1;
-const double nivel_minimo_agua = 50.00;
-const double nivel_maximo_agua = 98.00;
-double nivel_tanque_arriba=0;
-double nivel_tanque_abajo=0;
+const double nivel_minimo_agua = 60.00;
+const double nivel_maximo_agua = 80.00;
+double nivel_tanque_arriba;
+double nivel_tanque_abajo;
 
 //Estados de la Bomba de Agua
 const int rele_control = 9;
@@ -21,6 +21,10 @@ void setup() {
   // put your setup code here, to run once:
   Serial.begin(9600); //inicia la comunicación entre el arduino y la pc por serie a 9600 baudios
   pinMode(rele_control, OUTPUT);//Configuro el pin digital del rele como salida
+
+  //Configuraciones y condiciones iniciales
+  estadoArduino=reposo;
+  bomba(apagar);
 }
 
 double sensar_agua(int tanque){
