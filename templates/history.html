@@ -3,9 +3,9 @@
 <html lang="en">
 
 	<head>
-	  	<title>Historial</title>
-	  	<meta charset="utf-8">
-	  	<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Historial</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="stylesheet" href="{{ url_for('static', filename='bootstrap.min.css')}}" type="text/css">
 		<link rel="stylesheet" href="{{ url_for('static', filename='w3.css')}}" type="text/css">
 		<link rel="stylesheet" href="{{ url_for('static', filename='button_style.css')}}" type="text/css">
@@ -15,51 +15,51 @@
 	<body>
 
 		<div class="w3-container w3-blue", align="center">
-  			<h1>Cisterna Automatica</h1>
-  			<p>Taller de Proyectos II</p> 
+			<h1>Cisterna Automatica</h1>
+			<p>Taller de Proyectos II</p> 
 		</div>
 
- 		<div class="container">
-  			<div class="widget-header">
-    			<i class="icon-th-list"></i>
-    			<h3><p class="text-center">Historial</p></h3>
- 			 </div>
+		<div class="container">
+			<div class="widget-header">
+				<i class="icon-th-list"></i>
+				<h3><p class="text-center">Historial</p></h3>
+			 </div>
 
 			<table class="table table-striped table-bordered">
 				<thead>
-			      	<tr class="active">
-				        <th><p class="text-center">Fecha (dd/mm/aaaa)</p></th>
-				        <th><p class="text-center">Hora (hh:mm)</p></th>
-				        <th><p class="text-center">Cisterna Superior (%)</p></th>
-				        <th><p class="text-center">Cisterna Inferior (%)</p></th>
-				        <th><p class="text-center">Estado</p></th>
-				    </tr>
+					<tr class="active">
+						<th><p class="text-center">Fecha (dd/mm/aaaa)</p></th>
+						<th><p class="text-center">Hora (hh:mm)</p></th>
+						<th><p class="text-center">Tanque Superior (%)</p></th>
+						<th><p class="text-center">Tanque Inferior (%)</p></th>
+						<th><p class="text-center">Estado</p></th>
+					</tr>
 				</thead>
 				<tbody>
 					{% for i in range(0,tamano): %}
-					    <tr class="success">
-						    <td><p class="text-center">{{fecha[i]}}</p></td>
-						    <td><p class="text-center">{{hora[i]}}</p></td>
-					        <td><p class="text-center">{{tanqueArriba[i]}}</p></td>
-						    <td><p class="text-center">{{tanqueAbajo[i]}}</p></td>
-						    {%  if estado[i] == "completado": %}
-				        		<td><p class="text-center", style="color:MediumSeaGreen";>{{estado[i]}}</p></td>
-				        	{% else %}
-				        		<td><p class="text-center", style="color:Red";>{{estado[i]}}</p></td>
-				        	{% endif %}
-				    	</tr>
-			    	{% endfor %}
-			    </tbody>
+						<tr class="success">
+							<td><p class="text-center">{{fecha[i]}}</p></td>
+							<td><p class="text-center">{{hora[i]}}</p></td>
+							<td><p class="text-center">{{tanqueArriba[i]}}</p></td>
+							<td><p class="text-center">{{tanqueAbajo[i]}}</p></td>
+							{%  if estado[i] == "completado": %}
+								<td><p class="text-center", style="color:MediumSeaGreen";>{{estado[i]}}</p></td>
+							{% else %}
+								<td><p class="text-center", style="color:Red";>{{estado[i]}}</p></td>
+							{% endif %}
+						</tr>
+					{% endfor %}
+				</tbody>
 			</table>
 
 			<div class="widget-header">
-    			<h3><p class="text-left">Estados Posibles</p></h3>
-    			<h4 style="color:MediumSeaGreen">completado</h4>
-    			<h5>Indica que la carga del tanque superior fue realizada exitosamente.</h5>
-    			<h4 style="color:Red">fallo</h4>
-    			<h5>Indica que la carga del tanque superior fallo debido a que no hay suficiente agua en el tanque inferior</h5>
- 			</div>
- 			<div class="w3-row-padding", align="center">
+				<h3><p class="text-left">Estados Posibles</p></h3>
+				<h4 style="color:MediumSeaGreen">completado</h4>
+				<h5>Indica que la carga del tanque superior fue realizada exitosamente.</h5>
+				<h4 style="color:Red">fallo</h4>
+				<h5>Indica que la carga del tanque superior fallo debido a que no hay suficiente agua en el tanque inferior</h5>
+			</div>
+			<div class="w3-row-padding", align="center">
 				<form method="get" action="/">
 					<button type="submit", class="button">Atras</button>
 				</form>

@@ -39,9 +39,9 @@ def history():
 			elif(i==2):
 				hora.append(line[:-1])
 			elif(i==3):
-				tanqueArriba.append(line[:-1])
+				tanqueArriba.append(line[:-4])
 			elif(i==4):
-				tanqueAbajo.append(line[:-1])
+				tanqueAbajo.append(line[:-4])
 			i=i+1
 			if(i==5):
 				i=0
@@ -53,4 +53,4 @@ def pruebas():
 	return render_template('pruebas.html')
 
 if __name__ == '__main__':		#Esta linea controla que se haya corrido el script desde la linea de comandos y no desde otro script
-    app.run(debug=True, host='0.0.0.0', use_reloader=True) #Levanta el servidor
+	app.run(debug=True, host='0.0.0.0', use_reloader=True) #Levanta el servidor

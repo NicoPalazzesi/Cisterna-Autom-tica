@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-  		<title>Cisterna Automatica</title>
-  		<meta charset="utf-8">
+		<title>Cisterna Automatica</title>
+		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="stylesheet" href="{{ url_for('static', filename='barras_percent.css')}}" type="text/css">
 		<link rel="stylesheet" href="{{ url_for('static', filename='bootstrap.min.css')}}" type="text/css">
@@ -15,29 +15,25 @@
 	<body>
 		<div class="w3-container w3-blue", align="center">
 			<h1>Cisterna Automatica</h1>
-  			<p>Taller de Proyectos II</p> 
+			<p>Taller de Proyectos II</p> 
 		</div>
 		<div class="container">
 			<div class="widget-header">
-	   			<h3><p class="text-center">Estado Actual</p></h3>
-	    			<!--<h3><p class="text-left">Cisterna Superior</p></h3>
-	   				<meter value="70" low="25" high="75" optimum="100" max="100">70 %</meter>
-	   				<h3><p class="text-left">Cisterna Inferior</p></h3>
-	   				<meter value="100" low="25" high="75" optimum="100" max="100">100 %</meter>-->
+				<h3><p class="text-center">Estado Actual</p></h3>
 			</div>	
 		</div>
 			<div class="w3-row-padding", align="center">
 				<div class="w3-third">
-				    <h2>Tanque Superior</h2>
-				    <p>Tanque principal, ubicado en el techo de la casa.</p>
-				    <div id="bar-1" class="bar-main-container azure">
-    					<div class="wrap">
-      						<div class="bar-percentage" data-percentage="{{tanqueArriba}}">{{tanqueArriba}}%</div>
-      							<div class="bar-container">
-        							<div class="bar" style="width: {{tanqueArriba}}%;"></div>
-     							</div>
-    					</div>
-  					</div>
+					<h2>Tanque Superior</h2>
+					<p>Tanque principal, ubicado en el techo de la casa.</p>
+					<div id="bar-1" class="bar-main-container azure">
+						<div class="wrap">
+							<div class="bar-percentage" data-percentage="{{tanqueArriba}}">{{tanqueArriba}}%</div>
+							<div class="bar-container">
+								<div class="bar" style="width: {{tanqueArriba}}%;"></div>
+							</div>
+						</div>
+					</div>
 				</div>
 				<div class="w3-third", align="center">
 					{% if estado == "reposo": %}
@@ -49,16 +45,16 @@
 					<p></p>
 				</div>
 				<div class="w3-third">
-				    <h2>Tanque Inferior</h2>
-				    <p>Tanque de reserva, ubicado a la altura del suelo.</p>
-				    <div id="bar-1" class="bar-main-container azure">
-    					<div class="wrap">
-      						<div class="bar-percentage" data-percentage="{{tanqueAbajo}}">{{tanqueAbajo}}%</div>
-      							<div class="bar-container">
-        							<div class="bar" style="width: {{tanqueAbajo}}%;"></div>
-     							</div>
-    					</div>
-  					</div>
+					<h2>Tanque Inferior</h2>
+					<p>Tanque de reserva, ubicado a la altura del suelo.</p>
+					<div id="bar-1" class="bar-main-container azure">
+						<div class="wrap">
+							<div class="bar-percentage" data-percentage="{{tanqueAbajo}}">{{tanqueAbajo}}%</div>
+							<div class="bar-container">
+								<div class="bar" style="width: {{tanqueAbajo}}%;"></div>
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
