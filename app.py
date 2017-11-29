@@ -1,5 +1,6 @@
 from flask import Flask, render_template		#Se importan los modulos necesarios de Flask para poder levantar la web
 import threading
+import thread
 import serial
 import time
 
@@ -8,11 +9,12 @@ porcentajeTanqueAbajo=0
 estado="reposo"
 
 def seriaDataThreadFunction():
+	import serial
 	global porcentajeTanqueArriba
 	global porcentajeTanqueAbajo
 	global estado
 	tanqueLeido='arriba';	#Se define una variable para controla de cual tanque se leyo el ultimo dato
-
+	
 	with serial.Serial('COM5',9600) as port, open('history.txt','ab') as output:	#Se establece la conexion serie a 9600 baudios y se abre el archivo en modo de escritura
 		while(1):	
 			x = port.read(size=10)		#Se lee un dato. Size = 10 indica la cantidad maxima de bytes a leer.
@@ -50,12 +52,16 @@ def seriaDataThreadFunction():
 				else:
 					tanqueLeido = 'arriba'		#	El proximo valor leido correspondera al tanque de arriba
 					porcentajeTanqueAbajo = x	#	Actualizar el valor del tanque de abajo
+			#print x
 
 app = Flask(__name__)
 
 @app.route('/')
 def index():
-	return render_template('index.html', tanqueArriba=porcentajeTanqueArriba, tanqueAbajo=20, estado="reposo")
+	global porcentajeTanqueArriba
+	global porcentajeTanqueAbajo
+	global estado
+	return render_template('index.html', tanqueArriba=porcentajeTanqueArriba, tanqueAbajo=porcentajeTanqueAbajo, estado=estado)
 
 @app.route('/history')
 def history():
@@ -90,6 +96,7 @@ def pruebas():
 
 if __name__ == '__main__':		#Esta linea controla que se haya corrido el script desde la linea de comandos y no desde otro script
 	seriaDataThread = threading.Thread(target = seriaDataThreadFunction)
-	#seriaDataThread.start()
+	seriaDataThread.start()
 	#seriaDataThread.join()
+	#thread.start_new_thread(seriaDataThreadFunction,())
 	app.run(debug=True, host='0.0.0.0', use_reloader=True) #Levanta el servidor
