@@ -62,11 +62,11 @@ void loop() {
     case cargando:
       if(nivel_tanque_arriba>=nivel_maximo_agua || nivel_tanque_abajo<=nivel_minimo_agua){
         bomba(apagar);
-        estadoArduino=reposo;
-        if(nivel_tanque_arriba>=nivel_maximo_agua)
+        if(nivel_tanque_arriba>=nivel_maximo_agua){
+          estadoArduino=reposo;
           Serial.print("completado");
-        else
-          Serial.print("fallo");
+        }else
+          estadoArduino=fallo;
       }
       break;
     case fallo:
