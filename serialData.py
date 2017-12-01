@@ -1,42 +1,24 @@
 import serial
-import time
+import serial.tools.list_ports
+
 
 porcentajeTanqueArriba=0
 porcentajeTanqueAbajo=0
 estado="reposo"
 
-def getPorcentajeTanqueArriba():
-	global porcentajeTanqueArriba
-	p = porcentajeTanqueArriba
-	return p
-
-def getPorcentajeTanqueAbajo():
-	global porcentajeTanqueAbajo
-	return porcentajeTanqueAbajo
-
-def getEstado():
-	global estado
-	return estado
-
-def setPorcentajeTanqueArriba(valor):
-	global porcentajeTanqueArriba
-	porcentajeTanqueArriba=valor
-
-def setPorcentajeTanqueAbajo(valor):
-	global porcentajeTanqueAbajo
-	porcentajeTanqueAbajo=valor
-
-def setEstado(valor):
-	global estado
-	estado=valor
-
 if __name__ == "__main__":
 	tanqueLeido='arriba';	#Se define una variable para controla de cual tanque se leyo el ultimo dato
 
-	with serial.Serial('COM5',9600) as port, open('history.txt','ab') as output:	#Se establece la conexion serie a 9600 baudios y se abre el archivo en modo de escritura
+	#Detecta el puerto serie donde se encuentra conectado el Arduino
+	ports = list(serial.tools.list_ports.comports())
+	for p in ports:
+		if "Arduino" in p[1]:
+			portArduinoConnect=p[0]
+
+	with serial.Serial(portArduinoConnect,9600) as port, open('history.txt','ab') as output, open('datos.txt', 'ab') as dataout:	#Se establece la conexion serie a 9600 baudios y se abre el archivo en modo de escritura
 		while(1):	
-			x = port.read(size=10)		#Se lee un dato. Size = 10 indica la cantidad maxima de bytes a leer.
-			#print porcentajeTanqueArriba
+			x = port.readline()		#Se lee un dato. Size = 10 indica la cantidad maxima de bytes a leer.
+			x = x.rstrip('\r\n')
 			if(x == "completado") or (x == "fallo"):	#Si el dato leido es completado o fallo, se debe almacenar en el archivo
 				#Guardo el estado Final
 				x=x+"\r\n"								#Se agrega un salto de linea al final del dato
@@ -56,6 +38,7 @@ if __name__ == "__main__":
 				#Guardo el porcentaje final de los tanques
 				for i in range(2):						#	
 					x = port.read(size=6)				# 	Los siguientes dos datos leidos 
+					x = x.rstrip('\r\n')
 					if(i==1):							#		indican el valor sensado
 						x=x+"\r\n"						#			de los tanques
 					output.write(x)
@@ -70,3 +53,8 @@ if __name__ == "__main__":
 				else:
 					tanqueLeido = 'arriba'		#	El proximo valor leido correspondera al tanque de arriba
 					porcentajeTanqueAbajo = x	#	Actualizar el valor del tanque de abajo
+
+					#Guardo los valores en el archivo
+					print porcentajeTanqueArriba
+					dataout.write("{0}/{1}/{2}\n".format(porcentajeTanqueArriba,porcentajeTanqueAbajo,estado))
+					dataout.flush()
