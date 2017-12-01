@@ -15,10 +15,10 @@ if __name__ == "__main__":
 		if "Arduino" in p[1]:
 			portArduinoConnect=p[0]
 
-	with serial.Serial(portArduinoConnect,9600) as port, open('history.txt','ab') as output, open('datos.txt', 'ab') as dataout:	#Se establece la conexion serie a 9600 baudios y se abre el archivo en modo de escritura
+	with serial.Serial(portArduinoConnect,9600) as port, open('history.txt','ab') as output, open('datos.txt', 'r+') as dataout:	#Se establece la conexion serie a 9600 baudios y se abre el archivo en modo de escritura
 		while(1):	
 			x = port.readline()		#Se lee un dato. Size = 10 indica la cantidad maxima de bytes a leer.
-			x = x.rstrip('\r\n')
+			x = x.rstrip('\r\n')						#Se quita el EOF
 			if(x == "completado") or (x == "fallo"):	#Si el dato leido es completado o fallo, se debe almacenar en el archivo
 				#Guardo el estado Final
 				x=x+"\r\n"								#Se agrega un salto de linea al final del dato
@@ -56,5 +56,6 @@ if __name__ == "__main__":
 
 					#Guardo los valores en el archivo
 					print porcentajeTanqueArriba
+					dataout.seek(0,0)
 					dataout.write("{0}/{1}/{2}\n".format(porcentajeTanqueArriba,porcentajeTanqueAbajo,estado))
 					dataout.flush()
