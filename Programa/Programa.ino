@@ -6,10 +6,10 @@ int estadoArduino;
 //Estados de los Sensores de Agua
 const int sensor_de_agua_arriba = 2;
 const int sensor_de_agua_abajo = 1;
-const double nivel_minimo_agua = 60.00;
-const double nivel_maximo_agua = 80.00;
-double nivel_tanque_arriba;
-double nivel_tanque_abajo;
+const int nivel_minimo_agua = 60;
+const int nivel_maximo_agua = 80;
+int nivel_tanque_arriba;
+int nivel_tanque_abajo;
 
 //Estados de la Bomba de Agua
 const int rele_control = 9;
@@ -53,18 +53,18 @@ void loop() {
         if(nivel_tanque_abajo >= nivel_minimo_agua){  //Si el nivel del agua del tanque inferior es mayor al minimo establecido
           estadoArduino=cargando;                     //Cambio de estado
           bomba(prender);                             //Se enciende la bomba
-          Serial.print("cargando");                   //Se envia una linea a la PC indicando que comenzo la carga
+          Serial.println("cargando");                   //Se envia una linea a la PC indicando que comenzo la carga
         }else                                         
-          Serial.print("fallo");                      //Se envia una linea a la PC indicando que ocurrió un fallo
+          Serial.println("fallo");                      //Se envia una linea a la PC indicando que ocurrió un fallo
       break;
     case cargando:
       if(nivel_tanque_arriba>=nivel_maximo_agua || nivel_tanque_abajo<=nivel_minimo_agua ){ //Si el nivel del agua del tanque superior es mayor al maximo establecido (en este caso, 98.00) o el nivel del agua del tanque inferior es menor al minimo establecido
         bomba(apagar);                    //Se apaga la bomba
         estadoArduino=reposo;             //Cambio de estado
         if(nivel_tanque_arriba>=nivel_maximo_agua)  //Si se cumplió la primera condición, quiere decir que se completó la carga del tanque superior
-          Serial.print("completado");               //Se envia una linea a la PC indicando que se completó correctamente la carga
+          Serial.println("completado");               //Se envia una linea a la PC indicando que se completó correctamente la carga
         else                             //El tanque inferior se quedo sin agua suficiente
-          Serial.print("fallo");         //Se envia una linea a la PC indicando que comenzo la carga
+          Serial.println("fallo");         //Se envia una linea a la PC indicando que comenzo la carga
       }
       break;
   }
