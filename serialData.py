@@ -1,3 +1,4 @@
+import time
 import serial
 import serial.tools.list_ports
 
@@ -17,9 +18,13 @@ if __name__ == "__main__":
 
 	with serial.Serial(portArduinoConnect,9600) as port, open('history.txt','ab') as output, open('datos.txt', 'r+') as dataout:	#Se establece la conexion serie a 9600 baudios y se abre el archivo en modo de escritura
 		while(1):	
-			x = port.readline()		#Se lee un dato. Size = 10 indica la cantidad maxima de bytes a leer.
+			x = port.readline()							#Se lee un dato.
 			x = x.rstrip('\r\n')						#Se quita el EOF
 			if(x == "completado") or (x == "fallo"):	#Si el dato leido es completado o fallo, se debe almacenar en el archivo
+				if(x == "completado")					#Indico el estado actual de la bomba
+					estado="reposo"						#Si la carga finalizo correctamente, el estado es reposo
+				else
+					estado="fallo"						#Si la carga no finalizo correctamente, es que hubo un fallo
 				#Guardo el estado Final
 				x=x+"\r\n"								#Se agrega un salto de linea al final del dato
 				output.write(x)							#Se escribe el dato en el archivo
@@ -37,13 +42,9 @@ if __name__ == "__main__":
 				
 				#Guardo el porcentaje final de los tanques
 				for i in range(2):						#	
-					x = port.read(size=6)				# 	Los siguientes dos datos leidos 
-					x = x.rstrip('\r\n')
-					if(i==1):							#		indican el valor sensado
-						x=x+"\r\n"						#			de los tanques
+					x = port.readline()					# 	Los siguientes dos datos leidos
 					output.write(x)
 					output.flush()
-					estado="reposo"				#Dejar de mostrar que la bomba esta prendida
 			elif(x == "cargando"):				# Si el dato leido es cargando, se indica en la pagina principal de la web que la bomba esta encendida
 				estado="funcionando"			#Mostrar en pantalla que la bomba esta prendida
 			else:								#	Significa que lo que se leyo fue un valor numerico
@@ -55,7 +56,6 @@ if __name__ == "__main__":
 					porcentajeTanqueAbajo = x	#	Actualizar el valor del tanque de abajo
 
 					#Guardo los valores en el archivo
-					print porcentajeTanqueArriba
 					dataout.seek(0,0)
 					dataout.write("{0}/{1}/{2}\n".format(porcentajeTanqueArriba,porcentajeTanqueAbajo,estado))
 					dataout.flush()

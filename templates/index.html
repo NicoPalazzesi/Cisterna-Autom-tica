@@ -4,6 +4,7 @@
 		<title>Cisterna Automatica</title>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta http-equiv="refresh" content=1>
 		<link rel="stylesheet" href="{{ url_for('static', filename='barras_percent.css')}}" type="text/css">
 		<link rel="stylesheet" href="{{ url_for('static', filename='bootstrap.min.css')}}" type="text/css">
 		<link rel="stylesheet" href="{{ url_for('static', filename='w3.css')}}" type="text/css">
@@ -19,7 +20,7 @@
 		</div>
 		<div class="container">
 			<div class="widget-header">
-				<h3><p class="text-center">Estado Actual</p></h3>
+				<h3><p class="text-center">Estado Actual del Sistema</p></h3>
 			</div>	
 		</div>
 			<div class="w3-row-padding", align="center">
@@ -36,10 +37,12 @@
 					</div>
 				</div>
 				<div class="w3-third", align="center">
-					{% if estado == "Reposo": %}
-						<h4>Cisterna en Reposo</h4>
+					{% if estado == "reposo": %}
+						<td><p class="text-center", style="color:MediumSeaGreen";>En Reposo</p></td>
+					{% elif estado == "fallo": %}
+						<td><p class="text-center", style="color:Red";>Ocurrio un problema</p></td>
 					{% else: %}
-						<h4>Cisterna en funcionamiento</h4>
+						<td><p class="text-center", style="color:Darkturquoise";>Cargando Tanque Superior</p></td>
 					{% endif %}
 					<p></p>
 					<p></p>
