@@ -17,13 +17,15 @@ if __name__ == "__main__":
 			portArduinoConnect=p[0]
 
 	with serial.Serial(portArduinoConnect,9600) as port, open('history.txt','ab') as output, open('datos.txt', 'r+') as dataout:	#Se establece la conexion serie a 9600 baudios y se abre el archivo en modo de escritura
+		print "Conexion con el Arduino establecida"
 		while(1):	
+			print "Leyendo Datos"
 			x = port.readline()							#Se lee un dato.
 			x = x.rstrip('\r\n')						#Se quita el EOF
 			if(x == "completado") or (x == "fallo"):	#Si el dato leido es completado o fallo, se debe almacenar en el archivo
-				if(x == "completado")					#Indico el estado actual de la bomba
+				if(x == "completado"):					#Indico el estado actual de la bomba
 					estado="reposo"						#Si la carga finalizo correctamente, el estado es reposo
-				else
+				else:
 					estado="fallo"						#Si la carga no finalizo correctamente, es que hubo un fallo
 				#Guardo el estado Final
 				x=x+"\r\n"								#Se agrega un salto de linea al final del dato

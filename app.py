@@ -13,7 +13,7 @@ def index():
 		porcentajeTanqueArriba = data[0]
 		porcentajeTanqueAbajo = data[1]
 		estado = data[2].rstrip('\r\n')
-
+		print porcentajeTanqueArriba
 	return render_template('index.html', tanqueArriba=porcentajeTanqueArriba, tanqueAbajo=porcentajeTanqueAbajo, estado=estado)
 
 @app.route('/history')
