@@ -5,9 +5,10 @@ const int fallo = 2;
 int estadoArduino;
 
 //Estados de los Sensores de Agua
-const int sensor_de_agua_arriba = 2;//Azul
-const int sensor_de_agua_abajo = 1;//Gris
-const int nivel_minimo_agua = 40;
+const int sensor_de_agua_arriba = A2;//Azul
+const int sensor_de_agua_abajo = A1;//Gris
+const int nivel_minimo_agua_arriba = 40;
+const int nivel_minimo_agua_abajo = 35;
 const int nivel_maximo_agua = 90;
 int nivel_tanque_arriba;
 int nivel_tanque_abajo;
@@ -28,34 +29,13 @@ void setup() {
   bomba(apagar);
 }
 
-double sensar_agua_arriba(){
+double sensar_agua(int tanque){
    double valorAgua=0;
-   valorAgua = analogRead(sensor_de_agua_arriba);  //Lee el valor del sensor correspondiente al tanque indicado en la variable 'tanque'
-   Serial.print("Arriba: ");
-   Serial.println(valorAgua);
-   if(valorAgua <= 498)
-      valorAgua=valorAgua*0.01004;
-   else
-      valorAgua=(valorAgua*0.6)-320;
-   if(valorAgua>100)
-      valorAgua=100;
+   const int sensorMaxValue= 1500;      // maximum sensor value
+   valorAgua = analogRead(tanque);
+   valorAgua = (valorAgua*100)/sensorMaxValue;
    return(valorAgua);
 }
-
-double sensar_agua_abajo(){
-   double valorAgua=0;
-   valorAgua = analogRead(sensor_de_agua_abajo);  //Lee el valor del sensor correspondiente al tanque indicado en la variable 'tanque'
-   Serial.print("Abajo: ");
-   Serial.println(valorAgua);
-   if(valorAgua <= 520)
-      valorAgua=valorAgua*0.00922;
-   else
-      valorAgua=(valorAgua*0.58)-294;
-   if(valorAgua>100)
-      valorAgua=100;
-   return(valorAgua);
-}
-
 void bomba(int estado){
   if(estado == 0)   // estado = 0 --> bomba encendida. estado = 1 --> bomba apagada
     digitalWrite(rele_control,HIGH);//Apago la bomba
@@ -65,12 +45,12 @@ void bomba(int estado){
 
 void loop() {
   // put your main code here, to run repeatedly:
-  nivel_tanque_arriba = sensar_agua_arriba(); //Se sensa el nivel del tanque superior
-  nivel_tanque_abajo = sensar_agua_abajo();   //Se sensa el nivel del tanque inferior  
+  nivel_tanque_arriba = sensar_agua(sensor_de_agua_arriba); //Se sensa el nivel del tanque superior
+  nivel_tanque_abajo = sensar_agua(sensor_de_agua_abajo);   //Se sensa el nivel del tanque inferior  
   switch(estadoArduino){ 
     case reposo:             
-      if(nivel_tanque_arriba<nivel_minimo_agua)       //Si el nivel del agua del tanque superior es menor al minimo establecido (en este caso, 50.00 o medio tanque)
-        if(nivel_tanque_abajo >= nivel_minimo_agua){  //Si el nivel del agua del tanque inferior es mayor al minimo establecido
+      if(nivel_tanque_arriba<nivel_minimo_agua_arriba)       //Si el nivel del agua del tanque superior es menor al minimo establecido (en este caso, 50.00 o medio tanque)
+        if(nivel_tanque_abajo >= nivel_minimo_agua_abajo){  //Si el nivel del agua del tanque inferior es mayor al minimo establecido
           estadoArduino=cargando;                     //Cambio de estado
           bomba(prender);                             //Se enciende la bomba
           Serial.println("cargando");                   //Se envia una linea a la PC indicando que comenzo la carga
@@ -78,7 +58,7 @@ void loop() {
           estadoArduino=fallo;
       break;
     case cargando:
-      if(nivel_tanque_arriba>=nivel_maximo_agua || nivel_tanque_abajo<=nivel_minimo_agua ){ //Si el nivel del agua del tanque superior es mayor al maximo establecido (en este caso, 98.00) o el nivel del agua del tanque inferior es menor al minimo establecido
+      if(nivel_tanque_arriba>=nivel_maximo_agua || nivel_tanque_abajo<=nivel_minimo_agua_abajo ){ //Si el nivel del agua del tanque superior es mayor al maximo establecido (en este caso, 98.00) o el nivel del agua del tanque inferior es menor al minimo establecido
         bomba(apagar);                    //Se apaga la bomba
         estadoArduino=reposo;             //Cambio de estado
         if(nivel_tanque_arriba>=nivel_maximo_agua)  //Si se cumplió la primera condición, quiere decir que se completó la carga del tanque superior
